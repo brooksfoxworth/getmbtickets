@@ -36,46 +36,117 @@
   </script>
 
   <style>
-    /* CSS Custom Properties */
+    /* ==========================================
+       CSS CUSTOM PROPERTIES & VARIABLES
+       ========================================== */
     :root {
       --gradient-primary: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #fbbf24 100%);
       --gradient-hero: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%, #0a0a0a 100%);
       --glow-amber: 0 15px 40px -10px rgba(245, 158, 11, 0.25);
     }
 
-    /* Utility Classes */
+    /* ==========================================
+       HEADER & NAVIGATION STYLES
+       ========================================== */
+    .header-enhanced {
+      background: linear-gradient(135deg, rgba(6,9,20,0.95) 0%, rgba(15,23,42,0.9) 50%, rgba(6,9,20,0.95) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(251, 191, 36, 0.15);
+      position: relative;
+    }
+    
     .nav-link {
-      padding: 0.5rem 0.75rem;
-      border-radius: 0.375rem;
-      color: #d1d5db;
-      transition: all 0.3s ease;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      color: #e5e7eb;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .nav-link:hover::before {
+      left: 100%;
     }
     .nav-link:hover {
       color: #fbbf24;
-      background-color: rgba(255, 255, 255, 0.05);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(245, 158, 11, 0.12));
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.12);
+      transform: translateY(-2px);
     }
-    @media (min-width: 1024px) {
-      .nav-link { padding: 0.75rem 1.25rem; }
-    }
-    @media (min-width: 1280px) {
-      .nav-link { padding: 1rem 1.5rem; }
+    @media (min-width: 1024px) { .nav-link { padding: 0.875rem 1.25rem; font-size: 0.95rem; } }
+    @media (min-width: 1280px) { .nav-link { padding: 1rem 1.5rem; font-size: 1rem; } }
+
+    /* Mobile header centering */
+    @media (max-width: 1023px) {
+      .site-header-inner {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 10.5rem !important; /* 30% reduction from original 15rem logo height */
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+      }
+      .site-nav { display: none !important; }
     }
     
+    /* Header logo sizing and effects */
     .header-logo {
-      height: 10rem;
+      height: 15rem;
       width: auto;
       object-fit: contain;
+      filter: drop-shadow(0 2px 6px rgba(251, 191, 36, 0.15));
+      transition: all 0.4s ease;
     }
+    .header-logo:hover {
+      filter: drop-shadow(0 3px 10px rgba(251, 191, 36, 0.25));
+      transform: scale(1.02);
+    }
+    @media (min-width: 1024px) { 
+      .header-logo { 
+        height: 7.5rem !important;
+        filter: drop-shadow(0 1px 4px rgba(251, 191, 36, 0.12));
+      }
+      .header-logo:hover {
+        filter: drop-shadow(0 2px 8px rgba(251, 191, 36, 0.2));
+      }
+    }
+    @media (min-width: 1280px) { .header-logo { height: 9rem !important; } }
+    @media (min-width: 1536px) { .header-logo { height: 10.5rem !important; } }
+
+    /* Desktop header adjustments */
     @media (min-width: 1024px) {
-      .header-logo { height: 5rem; }
+      .site-header-inner { 
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        height: clamp(6rem, 9vh, 8rem) !important; 
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+        position: relative;
+        z-index: 10;
+      }
+      .site-nav { 
+        position: static !important; 
+        left: auto !important; 
+        transform: none !important; 
+        display: flex !important;
+        gap: 0.5rem;
+      }
     }
-    @media (min-width: 1280px) {
-      .header-logo { height: 6rem; }
-    }
-    @media (min-width: 1536px) {
-      .header-logo { height: 7rem; }
-    }
-    
+
+    /* ==========================================
+       HERO SECTION STYLES
+       ========================================== */
     .hero-image {
       display: block;
       width: 100%;
@@ -89,193 +160,6 @@
       }
     }
     
-    .section-title {
-      font-size: 3.125rem;
-      font-weight: 900;
-      color: #fbbf24;
-      line-height: 1.2;
-    }
-    @media (min-width: 640px) {
-      .section-title { font-size: 1.5rem; }
-    }
-    @media (min-width: 1024px) {
-      .section-title { font-size: 1.75rem; }
-    }
-    @media (min-width: 1280px) {
-      .section-title { font-size: 2rem; }
-    }
-    @media (min-width: 1536px) {
-      .section-title { font-size: 2.25rem; }
-    }
-    
-    .primary-button {
-      position: relative;
-      background: var(--gradient-primary);
-      color: #000;
-      font-weight: 700;
-      border-radius: 0.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      border: 2px solid #fde047;
-      white-space: nowrap;
-      transition: all 0.3s ease;
-    }
-    .primary-button:hover {
-      transform: scale(1.05);
-    }
-    
-    .attraction-card {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(99, 102, 241, 0.2);
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      transition: all 0.3s ease;
-    }
-    .attraction-card:hover {
-      border-color: rgba(251, 191, 36, 0.4);
-      background: rgba(0, 0, 0, 0.4);
-      transform: scale(1.05);
-    }
-    @media (min-width: 1024px) {
-      .attraction-card {
-        padding: 2rem;
-      }
-    }
-    
-    .attraction-title {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 0.5rem;
-    }
-    @media (min-width: 1024px) {
-      .attraction-title {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
-      }
-    }
-    @media (min-width: 1280px) {
-      .attraction-title {
-        font-size: 1.125rem;
-      }
-    }
-    @media (min-width: 1536px) {
-      .attraction-title {
-        font-size: 1.25rem;
-      }
-    }
-    
-    .attraction-desc {
-      color: #d1d5db;
-      font-size: 0.75rem;
-      line-height: 1.5;
-    }
-    @media (min-width: 1024px) {
-      .attraction-desc {
-        font-size: 0.875rem;
-      }
-    }
-    @media (min-width: 1280px) {
-      .attraction-desc {
-        font-size: 1rem;
-      }
-    }
-    @media (min-width: 1536px) {
-      .attraction-desc {
-        font-size: 1.125rem;
-      }
-    }
-    
-    .category-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #fcd34d;
-      margin-bottom: 1rem;
-      border-bottom: 1px solid rgba(251, 191, 36, 0.3);
-      padding-bottom: 0.5rem;
-    }
-    @media (min-width: 1024px) {
-      .category-title {
-        font-size: 1.125rem;
-        margin-bottom: 1.25rem;
-        padding-bottom: 0.75rem;
-      }
-    }
-    @media (min-width: 1280px) {
-      .category-title {
-        font-size: 1.25rem;
-      }
-    }
-    @media (min-width: 1536px) {
-      .category-title {
-        font-size: 1.375rem;
-      }
-    }
-    
-    .form-label {
-      display: block;
-      font-weight: 500;
-      color: #fcd34d;
-      margin-bottom: 0.25rem;
-      font-size: 0.75rem;
-    }
-    @media (min-width: 1024px) {
-      .form-label {
-        font-size: 0.875rem;
-        margin-bottom: 0.5rem;
-      }
-    }
-    @media (min-width: 1280px) {
-      .form-label {
-        font-size: 1rem;
-      }
-    }
-    @media (min-width: 1536px) {
-      .form-label {
-        font-size: 1.125rem;
-      }
-    }
-    
-    .form-input {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid #4b5563;
-      border-radius: 0.5rem;
-      color: #fff;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.875rem;
-      min-height: 2rem;
-      transition: all 0.3s ease;
-    }
-    .form-input::placeholder {
-      color: #9ca3af;
-    }
-    .form-input:focus {
-      border-color: #fbbf24;
-      box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
-      outline: none;
-    }
-    @media (min-width: 1024px) {
-      .form-input {
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        min-height: 2.5rem;
-      }
-    }
-    @media (min-width: 1280px) {
-      .form-input {
-        padding: 1rem 1.25rem;
-        font-size: 1.125rem;
-        min-height: 3rem;
-      }
-    }
-    @media (min-width: 1536px) {
-      .form-input {
-        font-size: 1.25rem;
-        min-height: 3.5rem;
-      }
-    }
-
-    /* Hero Background */
     .hero-background {
       background: var(--gradient-hero);
       position: relative;
@@ -288,15 +172,62 @@
       pointer-events: none;
     }
 
-    /* Button Effects */
+    /* Hero CTA positioning */
+    @media (min-width: 1024px) {
+      #cover .hero-cta { bottom: 0.5rem !important; }
+    }
+
+    /* ==========================================
+       TYPOGRAPHY & SECTION STYLES
+       ========================================== */
+    .section-title {
+      font-size: 2.8125rem;
+      font-weight: 900;
+      color: #fbbf24;
+      line-height: 1.2;
+      margin-bottom: 0.5em;
+      text-align: center;
+      padding-left: clamp(12px, 4vw, 24px);
+      padding-right: clamp(12px, 4vw, 24px);
+    }
+    @media (min-width: 640px) { .section-title { font-size: 3.28125rem; } }
+    @media (min-width: 1024px) { 
+      .section-title { 
+        font-size: clamp(1.575rem, 2.1vw, 2.275rem);
+        margin-bottom: 0.35em;
+      } 
+    }
+    @media (min-width: 1280px) { .section-title { font-size: 3.28125rem; } }
+    @media (min-width: 1536px) { .section-title { font-size: 3.9375rem; } }
+
+    .section-subtitle {
+      font-size: clamp(1rem, 1.2vw, 1.125rem);
+      line-height: 1.6;
+      max-width: 60ch;
+    }
+
+    /* ==========================================
+       BUTTON STYLES
+       ========================================== */
+    .primary-button {
+      position: relative;
+      background: var(--gradient-primary);
+      color: #000;
+      font-weight: 700;
+      border-radius: 0.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 2px solid #fde047;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+    }
+    .primary-button:hover { transform: scale(1.05); }
+    
     .glow-button {
       position: relative;
       background: var(--gradient-primary);
       transition: all 0.3s ease;
     }
-    .glow-button:hover {
-      transform: scale(1.05);
-    }
+    .glow-button:hover { transform: scale(1.05); }
     @media (min-width: 768px) {
       .glow-button::before {
         content: '';
@@ -311,35 +242,375 @@
       }
     }
 
-    /* Animations */
-    @media (prefers-reduced-motion: no-preference) {
-      .hero-parallax {
-        animation: subtle-parallax 20s ease-in-out infinite;
+    /* ==========================================
+       PROMO SECTION STYLES
+       ========================================== */
+    @media (min-width: 1024px) {
+      .promo-copy { text-align: center !important; }
+      .promo-copy .flex { justify-content: center !important; }
+      .promo-actions { align-items: center !important; }
+      .promo-media img { 
+        height: clamp(36rem, 52vh, 48rem) !important; 
+        object-fit: cover !important; 
+        object-position: top center !important; 
       }
+    }
+
+    /* ==========================================
+       ATTRACTIONS SECTION STYLES
+       ========================================== */
+    @media (min-width: 1024px) {
+      #attractions .section-title { margin-bottom: 1.5em !important; }
+      #attractions .section-subtitle { margin-top: 1.5rem !important; line-height: 2 !important; }
+      
+      /* Add spacing between text elements in attractions description */
+      #attractions .text-yellow-400 { 
+        display: block !important; 
+        margin-bottom: 2rem !important; 
+      }
+      #attractions p span:last-child { 
+        display: block !important; 
+        margin-top: 2rem !important; 
+      }
+      #attractions p { line-height: 1.8 !important; }
+    }
+
+    .attraction-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    .attraction-card:hover {
+      border-color: rgba(251, 191, 36, 0.4);
+      background: rgba(0, 0, 0, 0.4);
+      transform: scale(1.05);
+    }
+    @media (min-width: 1024px) { .attraction-card { padding: 2rem; } }
+    
+    .attraction-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    @media (min-width: 1024px) { .attraction-title { font-size: 1rem; margin-bottom: 0.75rem; } }
+    @media (min-width: 1280px) { .attraction-title { font-size: 1.125rem; } }
+    @media (min-width: 1536px) { .attraction-title { font-size: 1.25rem; } }
+    
+    .attraction-desc {
+      color: #d1d5db;
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+    @media (min-width: 1024px) { .attraction-desc { font-size: 0.875rem; } }
+    @media (min-width: 1280px) { .attraction-desc { font-size: 1rem; } }
+    @media (min-width: 1536px) { .attraction-desc { font-size: 1.125rem; } }
+
+    /* ==========================================
+       FORM STYLES
+       ========================================== */
+    .form-label {
+      display: block;
+      font-weight: 500;
+      color: #fcd34d;
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+    }
+    @media (min-width: 1024px) { .form-label { font-size: 0.875rem; margin-bottom: 0.5rem; } }
+    @media (min-width: 1280px) { .form-label { font-size: 1rem; } }
+    @media (min-width: 1536px) { .form-label { font-size: 1.125rem; } }
+    
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid #4b5563;
+      border-radius: 0.5rem;
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      min-height: 2rem;
+      transition: all 0.3s ease;
+    }
+    .form-input::placeholder { color: #9ca3af; }
+    .form-input:focus {
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+      outline: none;
+    }
+    @media (min-width: 1024px) { 
+      .form-input { 
+        padding: 0.6rem 0.9rem;
+        min-height: 2.25rem;
+        font-size: 0.95rem;
+      } 
+    }
+    @media (min-width: 1280px) { 
+      .form-input { 
+        padding: 0.75rem 1rem; 
+        min-height: 2.5rem; 
+        font-size: 1rem; 
+      } 
+    }
+    @media (min-width: 1536px) { .form-input { font-size: 1.25rem; min-height: 3.5rem; } }
+
+    /* ==========================================
+       VIATOR WIDGET STYLES
+       ========================================== */
+    .viator-widget-container {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      will-change: auto;
+    }
+    .viator-widget-container:hover {
+      border-color: rgba(251, 191, 36, 0.4);
+      background: rgba(255, 255, 255, 0.3);
+    }
+    .viator-widget-container [data-vi-partner-id] {
+      min-height: 200px;
+      display: block;
+    }
+
+    /* Mobile Viator styling */
+    @media (max-width: 768px) {
+      #viator-widget-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+      }
+      
+      #viator-widget-wrapper [class*="widgetProductsContainer__"],
+      #viator-widget-wrapper [class*="ProductsContainer__"],
+      #viator-widget-wrapper [class*="productsContainer"],
+      #viator-widget-wrapper [class*="productGrid"],
+      #viator-widget-wrapper [class*="cardsContainer"],
+      #viator-widget-wrapper [class*="cardsWrapper"] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        width: 100% !important;
+        max-width: none !important;
+        overflow: visible !important;
+        height: auto !important;
+      }
+      
+      #viator-widget-wrapper a[class*="productCard__"],
+      #viator-widget-wrapper a[class*="ProductCard__"],
+      #viator-widget-wrapper [class*="productCard__"],
+      #viator-widget-wrapper [class*="ProductCard__"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 0 1rem 0 !important;
+        padding: 1rem !important;
+        box-sizing: border-box !important;
+        overflow: visible !important;
+        height: auto !important;
+      }
+      
+      #viator-widget-wrapper * {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        max-height: none !important;
+      }
+    }
+
+    /* ==========================================
+       ANIMATIONS & EFFECTS
+       ========================================== */
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-parallax { animation: subtle-parallax 20s ease-in-out infinite; }
     }
     @keyframes subtle-parallax {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-5px); }
     }
+
+    /* Particle Effects */
+    .particles-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(251, 191, 36, 0.4);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .particle-1 {
+      width: 3px;
+      height: 3px;
+      animation: float-1 25s infinite linear;
+      background: rgba(251, 191, 36, 0.3);
+    }
+
+    .particle-2 {
+      width: 2px;
+      height: 2px;
+      animation: float-2 30s infinite linear;
+      background: rgba(245, 158, 11, 0.4);
+    }
+
+    .particle-3 {
+      width: 4px;
+      height: 4px;
+      animation: float-3 35s infinite linear;
+      background: rgba(251, 191, 36, 0.2);
+    }
+
+    .particle-4 {
+      width: 2px;
+      height: 2px;
+      animation: float-4 28s infinite linear;
+      background: rgba(252, 211, 77, 0.3);
+    }
+
+    .particle-5 {
+      width: 3px;
+      height: 3px;
+      animation: float-5 32s infinite linear;
+      background: rgba(251, 191, 36, 0.25);
+    }
+
+    @keyframes float-1 {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(50px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float-2 {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+      }
+      85% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(-30px) rotate(-360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float-3 {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      12% {
+        opacity: 1;
+      }
+      88% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(80px) rotate(180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float-4 {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      8% {
+        opacity: 1;
+      }
+      92% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(-60px) rotate(-180deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float-5 {
+      0% {
+        transform: translateY(100vh) translateX(0px) rotate(0deg);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(40px) rotate(270deg);
+        opacity: 0;
+      }
+    }
+
+    /* Reduce particles on mobile for performance */
+    @media (max-width: 768px) {
+      .particle-4, .particle-5 {
+        display: none;
+      }
+    }
+
+    /* Debug/Force mobile styles */
+    html.viator-force-mobile #viator-mobile-iframe-host { display: block !important; }
+    html.viator-force-mobile #viator-widget-wrapper .viator-widget-container { display: none !important; }
+    html.viator-force-mobile #viator-widget-wrapper > :not(#viator-mobile-iframe-host) { display: none !important; }
+    html.viator-force-mobile #viator-widget-wrapper { width: 100% !important; margin-left: auto !important; margin-right: auto !important; max-width: none !important; }
   </style>
 </head>
 <body class="bg-[color:var(--bg,#060914)] bg-base-bg text-base-text antialiased">
-  <!-- Header (minimal) -->
-  <header class="relative z-30 bg-[rgba(6,9,20,0.75)] backdrop-blur-md border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-32 lg:h-18 xl:h-20 2xl:h-22 flex items-center justify-center sm:justify-between">
-      <a href="#top" class="flex items-center">
+  <!-- Enhanced Header -->
+  <header class="header-enhanced relative z-30">
+    <!-- Ambient glow effect -->
+    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/3 to-transparent opacity-40"></div>
+    
+    <div class="site-header-inner max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <a href="#top" class="flex items-center group">
         <img src="assets/images/header.png" alt="Get Myrtle Beach Tickets" class="header-logo" />
       </a>
-      <nav class="hidden sm:flex items-center gap-3 lg:gap-4 xl:gap-5 text-xs lg:text-sm xl:text-base 2xl:text-lg">
+      <nav class="site-nav hidden sm:flex items-center text-sm lg:text-base">
         <a href="#cover" class="nav-link">Home</a>
         <a href="#promo" class="nav-link">Featured</a>
         <a href="#attractions" class="nav-link">Tickets</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#policies" class="nav-link">Policies</a>
       </nav>
     </div>
+    
+    <!-- Bottom accent line -->
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent"></div>
   </header>
 
   <main id="top">
-    <!-- 1) Cover Photo Section -->
+    <!-- ==========================================
+         HERO/COVER SECTION
+         ========================================== -->
     <section id="cover" class="relative w-full md:h-[70vh] lg:h-[65vh] xl:h-[60vh] md:flex md:items-end p-0 m-0 hero-background">
       <!-- Background image (royalty-free Unsplash Myrtle Beach) -->
       <picture class="block md:absolute md:inset-0 w-full leading-none">
@@ -350,7 +621,7 @@
       </picture>
       
       <!-- Buy Tickets Now Button -->
-      <div class="absolute bottom-2 md:bottom-4 lg:bottom-6 xl:bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+      <div class="absolute bottom-1 md:bottom-2 lg:bottom-3 xl:bottom-4 left-1/2 transform -translate-x-1/2 z-10">
         <div class="relative">
           <!-- Glowing background effect -->
           <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 rounded-lg blur-sm opacity-75 animate-pulse"></div>
@@ -360,32 +631,54 @@
           </a>
         </div>
       </div>
-
     </section>
 
-    <!-- 2) Featured Promotion Section -->
-    <section id="promo" class="relative py-12 sm:py-16 lg:py-20 xl:py-24 bg-gray-900/40 border-t border-white/5">
-      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- ==========================================
+         FEATURED PROMOTION SECTION (Steve Falcon)
+         ========================================== -->
+    <section id="promo" class="relative py-12 sm:py-16 lg:py-14 xl:py-16 bg-gray-900/40 border-t border-white/5">
+      <!-- Subtle Particle Effects -->
+      <div class="particles-container">
+        <div class="particle particle-1" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle particle-2" style="left: 25%; animation-delay: 8s;"></div>
+        <div class="particle particle-3" style="left: 45%; animation-delay: 15s;"></div>
+        <div class="particle particle-4" style="left: 65%; animation-delay: 5s;"></div>
+        <div class="particle particle-5" style="left: 80%; animation-delay: 12s;"></div>
+        <div class="particle particle-1" style="left: 35%; animation-delay: 20s;"></div>
+        <div class="particle particle-2" style="left: 75%; animation-delay: 3s;"></div>
+        <div class="particle particle-3" style="left: 15%; animation-delay: 25s;"></div>
+      </div>
+      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid md:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 items-center">
-          <div class="order-2 md:order-1">
+          <!-- PROMO CONTENT (Left Column) -->
+          <div class="order-2 md:order-1 promo-copy">
+            <!-- Steve Falcon Logo -->
             <div class="flex justify-center mb-4 lg:mb-6 xl:mb-8">
               <img src="assets/images/stevefalconlogoremovebg.png" alt="Steve Falcon's Comedy Hypnosis Hour" class="h-40 sm:h-20 lg:h-24 xl:h-28 2xl:h-32 w-auto" />
             </div>
-            <p class="mt-3 lg:mt-4 xl:mt-5 text-gray-300 text-sm lg:text-base xl:text-lg 2xl:text-xl leading-relaxed">Prepare to be amazed and hilariously entertained! Steve Falcon delivers an unforgettable night of mind-bending hypnosis and side-splitting comedy. Don't miss out on the most talked-about show in town!</p>
-            <div class="mt-4 lg:mt-6 xl:mt-8 flex justify-center">
+            
+            <!-- Promo Description -->
+            <p class="mt-3 lg:mt-4 xl:mt-5 text-gray-200 text-sm lg:text-base xl:text-lg 2xl:text-xl leading-relaxed font-medium">Get ready for <span class="text-yellow-400 font-bold">Myrtle Beach's funniest night out!</span> Steve Falcon's Comedy Hypnosis Hour is the <span class="text-amber-300">highest-rated comedy show in town</span>, packed with <em>jaw-dropping hypnosis</em> and <strong>nonstop laughter</strong>. This is the show <span class="text-yellow-300">everyone is raving about</span>—don't wait, <strong>tickets disappear fast!</strong></p>
+            
+            <!-- Action Items -->
+            <div class="mt-4 lg:mt-6 xl:mt-8 flex flex-col items-center gap-6 lg:gap-10 xl:gap-12 2xl:gap-16 promo-actions">
+              <!-- Buy Tickets Button -->
               <div class="relative">
-                <!-- Glowing background effect -->
                 <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 rounded-lg blur-sm opacity-75 animate-pulse"></div>
-                <!-- Main button -->
-                <a href="https://example.com/tickets" target="_blank" rel="noopener" class="primary-button relative inline-block px-4 py-2 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:px-6 2xl:py-3 text-sm lg:text-sm xl:text-base 2xl:text-lg">
+                <a href="https://ci.ovationtix.com/36052/production/1044433" target="_blank" rel="noopener" class="primary-button relative inline-block px-4 py-2 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:px-6 2xl:py-3 text-sm lg:text-sm xl:text-base 2xl:text-lg">
                   <span class="relative z-10 drop-shadow-sm">Buy Tickets</span>
                 </a>
               </div>
+              
+              <!-- Award Image -->
+              <img src="assets/images/award2.png" alt="Award 2" class="h-48 sm:h-36 lg:h-42 xl:h-48 2xl:h-54 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300 drop-shadow-[0_0_18px_rgba(251,191,36,0.35)]" />
             </div>
           </div>
-          <div class="order-1 md:order-2">
+          
+          <!-- PROMO IMAGE (Right Column) -->
+          <div class="order-1 md:order-2 promo-media">
             <div class="relative rounded-2xl overflow-hidden shadow-glow border border-amber-400/30">
-              <img src="assets/images/headshot-falcon-header.jpg" alt="Steve Falcon Comedy Hypnosis Hour" class="w-full h-80 sm:h-40 lg:h-48 xl:h-56 2xl:h-64 object-cover object-[center_30%]" loading="lazy" />
+              <img src="assets/images/headshot-falcon-header.png" alt="Steve Falcon Comedy Hypnosis Hour" class="w-full h-80 sm:h-40 lg:h-48 xl:h-56 2xl:h-64 object-cover object-top" loading="lazy" />
               <div class="absolute inset-0 bg-gradient-to-tr from-base-bg/10 via-transparent to-black/30"></div>
               <!-- Featured Tag -->
               <div class="absolute top-2 left-2 lg:top-3 lg:left-3 xl:top-4 xl:left-4 bg-black/60 text-white font-medium px-1.5 py-0.5 lg:px-2 lg:py-1 xl:px-2.5 xl:py-1.5 2xl:px-3 2xl:py-2 rounded lg:rounded-md xl:rounded-lg text-xs lg:text-xs xl:text-sm 2xl:text-base backdrop-blur-sm border border-white/20">
@@ -397,315 +690,276 @@
       </div>
     </section>
 
-    <!-- 3) Attractions Section -->
-    <section id="attractions" class="relative py-16 sm:py-20 lg:py-24 xl:py-28 bg-indigo-950/70 border-t border-white/5">
-      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 lg:mb-16 xl:mb-20">
+    <!-- ==========================================
+         ATTRACTIONS SECTION (Viator Widget)
+         ========================================== -->
+    <section id="attractions" class="relative pt-12 pb-16 sm:pt-16 sm:pb-20 lg:pt-14 lg:pb-18 xl:pt-16 xl:pb-20 bg-indigo-950/70 border-t border-white/5">
+      <!-- Subtle Particle Effects -->
+      <div class="particles-container">
+        <div class="particle particle-2" style="left: 15%; animation-delay: 2s;"></div>
+        <div class="particle particle-1" style="left: 30%; animation-delay: 10s;"></div>
+        <div class="particle particle-3" style="left: 50%; animation-delay: 18s;"></div>
+        <div class="particle particle-4" style="left: 70%; animation-delay: 6s;"></div>
+        <div class="particle particle-5" style="left: 85%; animation-delay: 14s;"></div>
+        <div class="particle particle-2" style="left: 40%; animation-delay: 22s;"></div>
+        <div class="particle particle-1" style="left: 60%; animation-delay: 4s;"></div>
+        <div class="particle particle-3" style="left: 20%; animation-delay: 28s;"></div>
+        <div class="particle particle-4" style="left: 90%; animation-delay: 16s;"></div>
+      </div>
+      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Section Header -->
+        <div class="text-center mb-12 lg:mb-12 xl:mb-14">
           <h2 class="section-title">Myrtle Beach Attractions</h2>
-          <p class="section-subtitle text-indigo-200 mt-6 lg:mt-4">Discover the best shows and activities Myrtle Beach has to offer.</p>
+          <p class="text-gray-300 max-w-5xl mx-auto leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl text-center">
+            <span class="text-yellow-400 font-bold text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">Why stop at just one unforgettable night?</span><br><br>
+            Along with Steve Falcon's Comedy Hypnosis Hour, you can grab tickets to the hottest shows and attractions in Myrtle Beach—all right here. Book now through our site to lock in your seats and find the best deals. We've partnered with Viator to bring you the hottest attractions in Myrtle Beach!<br><br>
+            <span class="font-bold text-base lg:text-lg xl:text-xl 2xl:text-2xl"><em>The best entertainment on the Grand Strand is only a click away!</em></span>
+          </p>
         </div>
         
-        <!-- Live Music Shows -->
-        <div class="mb-16 lg:mb-20">
-          <h3 class="category-title">Live Music Shows</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <div class="attraction-card">
-              <h4 class="attraction-title">Legends in Concert Myrtle Beach</h4>
-              <p class="attraction-desc">Experience the ultimate tribute show featuring legendary performers.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Original Motown Tribute Show</h4>
-              <p class="attraction-desc">Relive the magic of Motown with authentic performances.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Music and Memories at Greg Rowles Legacy Theatre</h4>
-              <p class="attraction-desc">A nostalgic journey through musical history.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Rock N Soul Ultimate Live Show</h4>
-              <p class="attraction-desc">High-energy rock and soul performances that will blow you away.</p>
-            </div>
+        <!-- Viator Widget Container -->
+        <div id="viator-widget-wrapper">
+          <div class="viator-widget-container bg-black/20 border border-amber-400/20 rounded-2xl p-4 lg:p-6 xl:p-8 shadow-glow">
+            <div data-vi-partner-id="U00713410" data-vi-widget-ref="W-2de641ca-9d1b-4cbc-a6df-fd217b5cd024"></div>
           </div>
         </div>
-        
-        <!-- Magic Shows -->
-        <div class="mb-16 lg:mb-20">
-          <h3 class="category-title">Magic Shows</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <div class="attraction-card">
-              <h4 class="attraction-title">Charles Bach Wonders Magic and Illusion Show</h4>
-              <p class="attraction-desc">Mind-bending illusions and spectacular magic performances.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Magic & Comedy Show by Michael Bairefoot</h4>
-              <p class="attraction-desc">A perfect blend of magic and comedy for all ages.</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Dinner Shows -->
-        <div class="mb-16 lg:mb-20">
-          <h3 class="category-title">Dinner Shows</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <div class="attraction-card">
-              <h4 class="attraction-title">Polynesian Fire Luau and Dinner Show</h4>
-              <p class="attraction-desc">Authentic Polynesian entertainment with a delicious feast.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Riga Tony's Murder Mystery Dinner Show</h4>
-              <p class="attraction-desc">Solve a thrilling murder mystery while enjoying a delicious dinner.</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Group Activities -->
-        <div class="mb-12 lg:mb-16">
-          <h3 class="category-title">Group Activities</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <div class="attraction-card">
-              <h4 class="attraction-title">Axe Throwing in North Myrtle Beach</h4>
-              <p class="attraction-desc">Test your aim and have a blast with friends.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">2 HR Dolphin Tour in North Myrtle Beach</h4>
-              <p class="attraction-desc">Spot dolphins in their natural habitat on this exciting tour.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Catamaran Dolphin Cruise in Myrtle Beach with Barrier Island Stop</h4>
-              <p class="attraction-desc">Sail the waters and explore barrier islands while dolphin watching.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Jet Boat Ride on Thrill Seeker</h4>
-              <p class="attraction-desc">High-speed thrills and 360-degree spins on the water.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">The Escape Game at Broadway at the Beach in Myrtle Beach</h4>
-              <p class="attraction-desc">Challenge your team with immersive escape room experiences.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Indoor Golf Sim Myrtle Beach Your All Season Golf Destination</h4>
-              <p class="attraction-desc">Play world-famous courses year-round with state-of-the-art simulators.</p>
-            </div>
-            <div class="attraction-card">
-              <h4 class="attraction-title">Walking Dead Escape Room in Myrtle Beach</h4>
-              <p class="attraction-desc">Survive the zombie apocalypse in this thrilling escape experience.</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Placeholder Note -->
-        <div class="text-center mt-12 lg:mt-16">
-          <p class="text-sm lg:text-xl xl:text-2xl 2xl:text-3xl text-gray-400 italic">These are placeholder attractions and will be replaced by the live Viator widget in the future.</p>
-        </div>
+
+        <!-- Viator Widget Script Loader -->
+        <script>
+          (function(){
+            const LOADER_ID = 'viator-partner-widget-loader';
+            if (!document.getElementById(LOADER_ID)) {
+              const s = document.createElement('script');
+              s.id = LOADER_ID;
+              s.src = 'https://www.viator.com/orion/partner/widget.js';
+              s.async = true;
+              document.head.appendChild(s);
+            }
+          })();
+        </script>
       </div>
     </section>
 
-    <!-- 4) Contact Us Section -->
-    <section id="contact" class="relative py-16 sm:py-20 lg:py-24 xl:py-28 bg-gray-900/60 border-t border-white/5">
-      <div class="max-w-full xl:max-w-[80%] 2xl:max-w-[75%] mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12 lg:mb-16 xl:mb-20">
+    <!-- ==========================================
+         CONTACT SECTION
+         ========================================== -->
+    <section id="contact" class="relative py-12 sm:py-16 lg:py-14 xl:py-16 bg-gray-900/60 border-t border-white/5">
+      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-12 lg:mb-12 xl:mb-14">
           <h2 class="section-title">Contact Us</h2>
-          <p class="text-gray-300 max-w-5xl mx-auto leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl text-center">Have questions about tickets or need help planning your Myrtle Beach experience? We're here to help!</p>
+          <p class="section-subtitle text-gray-300 max-w-5xl mx-auto leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl">
+            Have questions about tickets or need help planning your Myrtle Beach experience? We're here to help!
+          </p>
         </div>
         
-        <div class="bg-black/40 border border-indigo-400/30 rounded-2xl p-4 lg:p-5 xl:p-6 2xl:p-8 shadow-glow">
-          <form class="space-y-6 lg:space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <!-- Contact Form Container -->
+        <div class="max-w-2xl mx-auto">
+          <div class="bg-black/20 border border-amber-400/20 rounded-2xl p-6 lg:p-8 shadow-glow">
+            <h3 class="text-xl lg:text-2xl font-bold text-amber-400 mb-6 text-center">Send us a Message</h3>
+            
+            <!-- Contact Form -->
+            <form class="space-y-4">
+              <!-- Name Field -->
               <div>
-                <label for="name" class="form-label">Your Name</label>
-                <input type="text" id="name" name="name" required class="form-input">
+                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                <input type="text" id="name" name="name" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" placeholder="Your name">
               </div>
+              
+              <!-- Email Field -->
               <div>
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" id="email" name="email" required class="form-input">
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input type="email" id="email" name="email" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors" placeholder="your@email.com">
               </div>
-            </div>
-            
-            <div>
-              <label for="subject" class="form-label">Subject</label>
-              <select id="subject" name="subject" required class="form-input">
-                <option value="">Select a topic...</option>
-                <option value="steve-falcon">Steve Falcon Comedy Hypnosis Show</option>
-                <option value="attractions">Other Myrtle Beach Attractions</option>
-                <option value="group-bookings">Group Bookings</option>
-                <option value="technical-support">Technical Support</option>
-                <option value="general">General Inquiry</option>
-              </select>
-            </div>
-            
-            <div>
-              <label for="message" class="form-label">Message</label>
-              <textarea id="message" name="message" rows="6" required
-                        placeholder="Tell us how we can help you make the most of your Myrtle Beach experience..."
-                        class="form-input resize-vertical"></textarea>
-            </div>
-            
-            <div class="text-center">
-              <div class="relative inline-block">
-                <!-- Glowing background effect -->
-                <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-400 rounded-lg blur-sm opacity-75"></div>
-                <!-- Main button -->
-                <button type="submit" class="primary-button relative px-4 py-2 lg:px-5 lg:py-2.5 xl:px-6 xl:py-3 text-xs lg:text-sm xl:text-base 2xl:text-lg">
-                  <span class="relative z-10 drop-shadow-sm">Send Message</span>
-                </button>
+              
+              <!-- Message Field -->
+              <div>
+                <label for="message" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-colors resize-none" placeholder="How can we help you?"></textarea>
               </div>
-            </div>
-          </form>
+              
+              <!-- Submit Button -->
+              <button type="submit" class="w-full primary-button px-6 py-3 text-base font-bold">
+                Send Message
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ==========================================
+         POLICIES SECTION
+         ========================================== -->
+    <section id="policies" class="relative py-12 sm:py-16 lg:py-14 xl:py-16 bg-indigo-950/70 border-t border-white/5">
+      <div class="max-w-full xl:max-w-[90%] 2xl:max-w-[85%] mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-12 lg:mb-12 xl:mb-14">
+          <h2 class="section-title">Policies & Information</h2>
+          <p class="section-subtitle text-gray-300 max-w-5xl mx-auto leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl">
+            Important information about bookings, cancellations, and our terms of service.
+          </p>
+        </div>
+        
+        <!-- Policy Buttons -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
+          <button onclick="openTermsPopup()" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 text-lg font-bold w-full sm:w-auto rounded-xl transition-colors duration-300">
+            Terms & Conditions
+          </button>
+          <button onclick="openRefundPopup()" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-8 py-4 text-lg font-bold w-full sm:w-auto rounded-xl transition-colors duration-300">
+            Refund Policy
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         POPUP MODALS
+         ========================================== -->
+    <!-- Terms & Conditions Modal -->
+    <div id="termsModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+      <div class="bg-gray-900 border border-amber-400/30 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+        <div class="p-6 lg:p-8">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-amber-400">Terms & Conditions</h3>
+            <button onclick="closeModal('termsModal')" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+          </div>
+          
+          <!-- Modal Content -->
+          <div class="text-gray-300 space-y-4 text-sm lg:text-base">
+            <p>Welcome to GetMyrtleBeachTickets.com. By accessing or purchasing through this website, you agree to the following terms and conditions:</p>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Ticket Sales</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• Tickets for Steve Falcon's Comedy Hypnosis Hour are sold directly through this website. All sales are final and non-refundable.</li>
+                <li>• Tickets for all other listed shows, tours, and attractions are processed by Viator. Purchases of these products are subject to Viator's terms and conditions, which may change at any time.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Use of Website</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• You agree to use this site only for lawful purposes and not for any activity that may disrupt or damage the site.</li>
+                <li>• Unauthorized use, including attempts to hack, scrape, or misuse this website, is prohibited.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Accuracy of Information</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• While we make every effort to ensure the accuracy of information provided, GetMyrtleBeachTickets.com is not responsible for errors, omissions, or changes in show schedules, pricing, or availability.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Liability</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• GetMyrtleBeachTickets.com is not liable for any direct or indirect damages, losses, or inconveniences arising from ticket purchases, cancellations, or changes beyond our control.</li>
+                <li>• For Viator products, all liability is governed by Viator's terms.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Intellectual Property</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• All content, images, logos, and branding on this website are the property of Steve Falcon and GetMyrtleBeachTickets.com. They may not be copied, distributed, or used without prior written consent.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Amendments</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• We reserve the right to update or modify these terms at any time. Continued use of the site after changes constitutes acceptance of the updated terms.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Refund Policy Modal -->
+    <div id="refundModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+      <div class="bg-gray-900 border border-amber-400/30 rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+        <div class="p-6 lg:p-8">
+          <!-- Modal Header -->
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-amber-400">Refund Policy</h3>
+            <button onclick="closeModal('refundModal')" class="text-gray-400 hover:text-white text-2xl">&times;</button>
+          </div>
+          
+          <!-- Modal Content -->
+          <div class="text-gray-300 space-y-4 text-sm lg:text-base">
+            <p>At GetMyrtleBeachTickets.com, we strive to provide a smooth and reliable ticketing experience for all Myrtle Beach entertainment. Please review the following refund terms before making your purchase:</p>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Steve Falcon's Comedy Hypnosis Hour</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• All sales are final.</li>
+                <li>• Tickets to Steve Falcon's Comedy Hypnosis Hour are non-refundable and non-transferable.</li>
+                <li>• No refunds or exchanges will be issued under any circumstances.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Other Listed Attractions and Productions</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• Tickets to all other shows, tours, and attractions featured on this site are processed and fulfilled by Viator.</li>
+                <li>• Refunds, cancellations, or exchanges for these products are subject solely to Viator's refund policies and terms, which may change at any time.</li>
+                <li>• Customers are encouraged to review Viator's official terms and conditions before completing a purchase.</li>
+              </ul>
+            </div>
+            
+            <div class="space-y-2">
+              <h4 class="text-amber-400 font-semibold">Contact Information</h4>
+              <ul class="space-y-1 pl-4">
+                <li>• For questions regarding Steve Falcon's Comedy Hypnosis Hour tickets, please contact us directly at 843-284-3463.</li>
+                <li>• For all other ticketed attractions sold through Viator, please refer to your booking confirmation and Viator's customer support. They can be contacted directly by phone at 888-651-9785.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <!-- Footer (simple) -->
-  <footer class="border-t border-white/5 bg-base-bg">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-4 xl:py-5 text-xs lg:text-sm xl:text-base 2xl:text-lg text-gray-400 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 lg:gap-4">
-      <span>© 2025 GetMyrtleBeachTickets.com • Myrtle Beach, SC</span>
-      <div class="flex items-center gap-4 lg:gap-8 xl:gap-12">
-        <button id="termsBtn" class="hover:text-amber-400 cursor-pointer lg:px-2 lg:py-1 xl:px-3 xl:py-1.5 rounded-md transition-colors duration-300">Terms and Conditions</button>
-        <button id="refundBtn" class="hover:text-amber-400 cursor-pointer lg:px-2 lg:py-1 xl:px-3 xl:py-1.5 rounded-md transition-colors duration-300">Refund Policy</button>
-      </div>
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="bg-gray-900/80 border-t border-white/10 py-4">
+    <div class="max-w-full mx-auto px-4 text-center">
+      <p class="text-gray-500 text-sm">
+        © 2024 Get Myrtle Beach Tickets. All rights reserved.
+      </p>
     </div>
   </footer>
+<script>
+function openTermsPopup() {
+  document.getElementById('termsModal').classList.remove('hidden');
+  document.getElementById('termsModal').classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
 
-  <!-- Terms and Conditions Modal -->
-  <div id="termsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-lg max-w-6xl xl:max-w-7xl w-full max-h-[90vh] overflow-y-auto">
-      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 lg:px-8 xl:px-10 py-4 lg:py-6 xl:py-8 flex justify-between items-center">
-        <h2 class="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-gray-900">TERMS AND CONDITIONS</h2>
-        <button id="closeTermsModal" class="text-gray-500 hover:text-gray-700 text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold">&times;</button>
-      </div>
-      <div class="px-6 lg:px-8 xl:px-10 py-6 lg:py-8 xl:py-10 text-gray-700 leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl">
-        <p class="mb-4 lg:mb-6"><strong>Last Updated:</strong> January 1, 2025</p>
-        <p class="mb-4">Welcome to GetMyrtleBeachTickets.com. By accessing or purchasing through this website, you agree to the following terms and conditions:</p>
-        
-        <div class="space-y-4">
-          <div>
-            <h3 class="font-semibold text-lg mb-2">1. Ticket Sales:</h3>
-            <ul class="list-disc list-inside space-y-1 ml-4">
-              <li>Tickets for Steve Falcon's Comedy Hypnosis Hour are sold directly through this website. All sales are final and non-refundable.</li>
-              <li>Tickets for all other listed shows, tours, and attractions are processed by Viator. Purchases of these products are subject to Viator's terms and conditions, which may change at any time.</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">1. Acceptance of Terms</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">By accessing and using GetMyrtleBeachTickets.com, you accept and agree to be bound by the terms and provision of this agreement.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">2. Ticket Purchases</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">All ticket purchases are subject to availability. Prices are subject to change without notice. We reserve the right to limit quantities and refuse service.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">3. Refund Policy</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">Refunds are processed according to our refund policy. Please see the separate refund policy document for detailed information.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">4. User Conduct</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">Users agree not to use the service for any unlawful purpose or in any way that could damage, disable, or impair the service.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">5. Privacy</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">We respect your privacy and are committed to protecting your personal information. We collect only necessary information for ticket processing.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">6. Limitation of Liability</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">GetMyrtleBeachTickets.com shall not be liable for any indirect, incidental, special, or consequential damages.</p>
-            
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">7. Changes to Terms</h3>
-            <p class="mb-4 lg:mb-5 xl:mb-6">We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+function openRefundPopup() {
+  document.getElementById('refundModal').classList.remove('hidden');
+  document.getElementById('refundModal').classList.add('flex');
+  document.body.style.overflow = 'hidden';
+}
 
-  <!-- Return and Refund Policy Modal -->
-  <div id="refundModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-lg max-w-6xl xl:max-w-7xl w-full max-h-[90vh] overflow-y-auto">
-      <div class="sticky top-0 bg-white border-b border-gray-200 px-6 lg:px-8 xl:px-10 py-4 lg:py-6 xl:py-8 flex justify-between items-center">
-        <h2 class="text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold text-gray-900">REFUND POLICY</h2>
-        <button id="closeRefundModal" class="text-gray-500 hover:text-gray-700 text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl font-bold">&times;</button>
-      </div>
-      <div class="px-6 lg:px-8 xl:px-10 py-6 lg:py-8 xl:py-10 text-gray-700 leading-relaxed text-sm lg:text-base xl:text-lg 2xl:text-xl">
-        <p class="mb-4 lg:mb-5 xl:mb-6"><strong>Last Updated:</strong> January 1, 2025</p>
-        <p class="mb-5 lg:mb-6 xl:mb-7">At GetMyrtleBeachTickets.com, we strive to provide a smooth and reliable ticketing experience for all Myrtle Beach entertainment. Please review the following refund terms before making your purchase:</p>
-        
-        <div class="space-y-4 lg:space-y-5 xl:space-y-6">
-          <div>
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">1. Steve Falcon's Comedy Hypnosis Hour:</h3>
-            <ul class="list-disc list-inside space-y-2 lg:space-y-3 xl:space-y-4 ml-4 lg:ml-5 xl:ml-6">
-              <li>All sales are final.</li>
-              <li>Tickets to Steve Falcon's Comedy Hypnosis Hour are non-refundable and non-transferable.</li>
-              <li>No refunds or exchanges will be issued under any circumstances.</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="text-base lg:text-lg xl:text-xl 2xl:text-2xl font-semibold mb-3 lg:mb-4 xl:mb-5 text-gray-900">2. Other Listed Attractions and Productions:</h3>
-            <ul class="list-disc list-inside space-y-2 lg:space-y-3 xl:space-y-4 ml-4 lg:ml-5 xl:ml-6">
-              <li>Tickets to all other shows, tours, and attractions featured on this site are processed and fulfilled by Viator.</li>
-              <li>Refunds, cancellations, or exchanges for these products are subject solely to Viator's refund policies and terms, which may change at any time.</li>
-              <li>Customers are encouraged to review Viator's official terms and conditions before completing a purchase.</li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 class="font-semibold text-lg mb-2">3. Contact Information:</h3>
-            <ul class="list-disc list-inside space-y-1 ml-4">
-              <li>For questions regarding Steve Falcon's Comedy Hypnosis Hour tickets, please contact us directly at <strong>843-284-3463</strong>.</li>
-              <li>For all other attraction tickets sold through Viator, please refer to your booking confirmation and Viator's customer support. They can be contacted directly by phone at <strong>888-651-9785</strong>.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.add('hidden');
+  document.getElementById(modalId).classList.remove('flex');
+  document.body.style.overflow = 'auto';
+}
 
-  <script>
-    // Modal functionality
-    document.addEventListener('DOMContentLoaded', () => {
-      const modals = {
-        terms: {
-          btn: document.getElementById('termsBtn'),
-          modal: document.getElementById('termsModal'),
-          close: document.getElementById('closeTermsModal')
-        },
-        refund: {
-          btn: document.getElementById('refundBtn'),
-          modal: document.getElementById('refundModal'),
-          close: document.getElementById('closeRefundModal')
-        }
-      };
-
-      // Modal control functions
-      const openModal = (modal) => {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-      };
-
-      const closeModal = (modal) => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        document.body.style.overflow = 'auto';
-      };
-
-      // Setup modal event listeners
-      Object.values(modals).forEach(({ btn, modal, close }) => {
-        btn?.addEventListener('click', () => openModal(modal));
-        close?.addEventListener('click', () => closeModal(modal));
-        modal?.addEventListener('click', (e) => {
-          if (e.target === modal) closeModal(modal);
-        });
-      });
-
-      // Close modals with Escape key
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-          Object.values(modals).forEach(({ modal }) => {
-            if (modal && !modal.classList.contains('hidden')) {
-              closeModal(modal);
-            }
-          });
-        }
-      });
-    });
-  </script>
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('fixed') && e.target.classList.contains('inset-0')) {
+    closeModal('termsModal');
+    closeModal('refundModal');
+  }
+});
+</script>
 </body>
 </html>
